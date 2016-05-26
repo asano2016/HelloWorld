@@ -8,11 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    @IBOutlet weak var itemlist: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        itemlist.delegate = self
+        itemlist.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +25,19 @@ class ViewController: UIViewController {
     }
 
 
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5 // 5個のデータがあるという意味
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        // 再利用可能な cell を得る
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        
+        // 値を設定する.
+        cell.textLabel!.text = "Row \(indexPath.row)"
+        
+        return cell
+    }
 }
 
